@@ -3,7 +3,7 @@ import { cpSync, mkdirSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const out = resolve(root, 'web-dist');
+const out = resolve(root, 'dist');
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
 const files = ['index.html', 'style.css', 'app.js', 'gen.js', 'worker.js', 'sw.js', 'manifest.json',
@@ -13,4 +13,4 @@ for (const file of files) {
   mkdirSync(dirname(resolve(out, file)), { recursive: true });
   cpSync(resolve(root, file), resolve(out, file));
 }
-console.log(`Static package: ${files.length} files in web-dist`);
+console.log(`Static package: ${files.length} files in dist`);
