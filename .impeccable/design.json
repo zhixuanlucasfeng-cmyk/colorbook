@@ -250,7 +250,7 @@
       "refersTo": "tool-selected",
       "description": "黑底表示当前工具。",
       "html": "<button class=\"ds-tool\" aria-pressed=\"true\">油漆桶</button>",
-      "css": ".ds-tool{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:var(--ink,#171715);color:var(--paper,#f5f2e9)}.ds-tool:hover{background:#e8e4d9}.ds-tool:active{transform:translateY(1px)}.ds-tool:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+      "css": ".ds-tool{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:var(--ink,#171715);color:var(--paper,#f5f2e9)}.ds-tool:hover{background:var(--ink,#171715)}.ds-tool:active{transform:translateY(1px)}.ds-tool:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
     },
     {
       "name": "格数选择器",
