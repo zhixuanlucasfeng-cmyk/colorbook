@@ -1,0 +1,17 @@
+@import "font.wxss";
+
+page {
+  --paper: #f3ecdc;
+  --paper-deep: #e2d8c0;
+  --card: #fffaf0;
+  --check: #f1e9d6;
+  --canvas: #e8dfc9;
+  --ink: #2a2438;
+  --muted: #625a70;
+  --tomato: #d23c1c;
+  --mint: #2fb88e;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "px", "PingFang SC", sans-serif;
+  -webkit-font-smoothing: none;
+}

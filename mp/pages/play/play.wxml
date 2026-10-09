@@ -1,0 +1,46 @@
+<view class="play">
+  <view class="top">
+    <view class="bar"><view wx:for="{{20}}" wx:for-item="b" wx:key="*this" class="seg {{b < blocks ? 'on' : ''}}"/></view>
+    <text class="count">{{done}} / {{total}}</text>
+  </view>
+
+  <view class="stage-wrap">
+    <canvas type="2d" id="c" class="stage" disable-scroll
+      bindtouchstart="ts" bindtouchmove="tm" bindtouchend="te" bindtouchcancel="tc"></canvas>
+
+    <view wx:if="{{recolor}}" class="panel">
+      <view class="swatch" style="background: {{palette[sel]}}; color: {{inks[sel]}}">{{sel + 1}} 号色</view>
+      <view class="hsl"><text>色相</text><slider class="sl" min="0" max="360" value="{{hsl[0]}}" block-size="16" activeColor="#2a2438" backgroundColor="#e2d8c0" block-color="#2a2438" data-i="0" bindchanging="onHsl" bindchange="onHslDone"/></view>
+      <view class="hsl"><text>饱和</text><slider class="sl" min="0" max="100" value="{{hsl[1]}}" block-size="16" activeColor="#2a2438" backgroundColor="#e2d8c0" block-color="#2a2438" data-i="1" bindchanging="onHsl" bindchange="onHslDone"/></view>
+      <view class="hsl"><text>亮度</text><slider class="sl" min="0" max="100" value="{{hsl[2]}}" block-size="16" activeColor="#2a2438" backgroundColor="#e2d8c0" block-color="#2a2438" data-i="2" bindchanging="onHsl" bindchange="onHslDone"/></view>
+    </view>
+  </view>
+
+  <view class="tools">
+    <view class="tool {{tool == 'brush' && !recolor ? 'on' : ''}}" hover-class="pressed" data-t="brush" bindtap="setTool">
+      <image src="/assets/brush-{{tool == 'brush' && !recolor ? 'paper' : 'ink'}}.svg"/>
+    </view>
+    <view class="tool {{tool == 'bucket' && !recolor ? 'on' : ''}}" hover-class="pressed" data-t="bucket" bindtap="setTool">
+      <image src="/assets/bucket-{{tool == 'bucket' && !recolor ? 'paper' : 'ink'}}.svg"/>
+    </view>
+    <view class="tool {{recolor ? 'on' : ''}}" hover-class="pressed" bindtap="toggleRecolor">
+      <image src="/assets/palette-{{recolor ? 'paper' : 'ink'}}.svg"/>
+    </view>
+    <view wx:if="{{tool == 'brush' && !recolor}}" class="size">
+      <view class="tool small" hover-class="pressed" data-d="-1" bindtap="onSize"><image src="/assets/minus-ink.svg"/></view>
+      <view class="size-num">{{size}}<text>格</text></view>
+      <view class="tool small" hover-class="pressed" data-d="1" bindtap="onSize"><image src="/assets/plus-ink.svg"/></view>
+    </view>
+    <view wx:else class="tool-name">{{recolor ? '改颜色' : '点一下填满同色区域'}}</view>
+  </view>
+
+  <scroll-view class="palette" scroll-x enhanced show-scrollbar="{{false}}" scroll-into-view="k{{sel}}" scroll-with-animation>
+    <view class="palette-row">
+      <view wx:for="{{palette}}" wx:key="index" id="k{{index}}" data-k="{{index}}" bindtap="pick"
+        class="sw {{index == sel ? 'on' : ''}} {{left[index] ? '' : 'done'}}" style="background: {{item}}; color: {{inks[index]}}">
+        <image wx:if="{{!left[index]}}" class="tick" src="/assets/check-{{inks[index] == '#fff' ? 'paper' : 'ink'}}.svg"/>
+        <text wx:else>{{index + 1}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

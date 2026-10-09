@@ -1,0 +1,62 @@
+.page { min-height: 100vh; padding: 24px 16px 120px; box-sizing: border-box; }
+
+.head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.logo { width: 42px; height: 42px; }
+.brand { font-size: 24px; line-height: 28px; color: var(--ink); }
+.sub { font-size: 12px; line-height: 16px; color: var(--muted); margin-top: 4px; }
+
+.grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.card { width: calc(50% - 8px); margin-bottom: 20px; background: var(--card); border: 3px solid var(--ink);
+  box-shadow: 0 6px 0 var(--ink); box-sizing: border-box; transition: transform .08s, box-shadow .08s; }
+.frame { padding: 8px; border-bottom: 3px solid var(--ink); background-color: var(--card);
+  background-image: linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%),
+    linear-gradient(45deg, var(--check) 25%, transparent 25%, transparent 75%, var(--check) 75%);
+  background-size: 12px 12px; background-position: 0 0, 6px 6px; }
+.thumb { width: 100%; height: 120px; display: block; }
+.bar { display: flex; gap: 2px; padding: 8px 8px 0; }
+.seg { flex: 1; height: 8px; background: var(--paper-deep); }
+.seg.on { background: var(--mint); }
+.meta { display: flex; align-items: center; justify-content: space-between; padding: 4px 4px 4px 8px; }
+.pct { font-size: 16px; line-height: 24px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.del { padding: 8px; }
+.del image { width: 16px; height: 16px; display: block; }
+
+.empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 48px 24px 0; }
+.hero { width: 112px; height: 112px; margin-bottom: 24px; }
+.empty-title { font-size: 16px; line-height: 24px; color: var(--ink); }
+.empty-text { font-size: 12px; line-height: 20px; color: var(--muted); margin-top: 8px; max-width: 260px; }
+
+.dock { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); }
+
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--card); color: var(--ink);
+  border: 3px solid var(--ink); box-shadow: 0 6px 0 var(--ink); font-size: 16px; line-height: 24px;
+  transition: transform .08s, box-shadow .08s; }
+.btn image { width: 18px; height: 18px; }
+.btn.primary { background: var(--tomato); color: var(--card); }
+.btn.big { height: 56px; font-size: 16px; }
+.btn.square { width: 44px; height: 44px; }
+.pressed { transform: translateY(4px); box-shadow: 0 2px 0 var(--ink) !important; }
+.dim { opacity: .5; }
+
+.scrim { position: fixed; inset: 0; background: rgba(42, 36, 56, .45); opacity: 0; pointer-events: none; transition: opacity .2s; }
+.scrim.show { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; background: var(--paper); border-top: 3px solid var(--ink);
+  padding: 20px 16px calc(20px + env(safe-area-inset-bottom)); transform: translateY(105%);
+  transition: transform .28s cubic-bezier(.16, 1, .3, 1); }
+.sheet.show { transform: none; }
+.sheet-title { font-size: 24px; line-height: 28px; color: var(--ink); margin-bottom: 8px; }
+.label { font-size: 16px; line-height: 24px; color: var(--ink); margin: 16px 0 8px; }
+.label.flat { margin: 0; }
+.hint { font-size: 12px; color: var(--muted); margin-left: 8px; }
+.seg-pick { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { width: calc((100% - 16px) / 3); height: 40px; line-height: 34px; text-align: center; box-sizing: border-box;
+  border: 3px solid var(--ink); background: var(--card); color: var(--ink); font-size: 16px; box-shadow: 0 4px 0 var(--ink);
+  transition: transform .08s, box-shadow .08s; }
+.chip.on { background: var(--ink); color: var(--card); }
+.stepper { display: flex; align-items: center; gap: 12px; }
+.num { min-width: 56px; text-align: center; font-size: 24px; line-height: 28px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.row { display: flex; align-items: center; justify-content: space-between; margin: 24px 0 24px; }
+.toggle { width: 52px; height: 28px; border: 3px solid var(--ink); background: var(--paper-deep); position: relative; flex-shrink: 0; }
+.toggle .knob { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ink); transition: left .12s; }
+.toggle.on { background: var(--mint); }
+.toggle.on .knob { left: 27px; }

@@ -1,0 +1,58 @@
+<view class="page">
+  <view class="head">
+    <image class="logo" src="/assets/logo.svg"/>
+    <view>
+      <view class="brand">像素填色</view>
+      <view class="sub">{{list.length ? list.length + ' 幅作品' : '把照片变成数字像素画'}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{list.length}}" class="grid">
+    <view wx:for="{{list}}" wx:key="id" class="card" hover-class="pressed" hover-stay-time="60" bindtap="open" data-id="{{item.id}}">
+      <view class="frame"><image class="thumb" src="{{item.thumb}}" mode="aspectFit"/></view>
+      <view class="bar"><view wx:for="{{10}}" wx:for-item="b" wx:key="*this" class="seg {{b < item.blocks ? 'on' : ''}}"/></view>
+      <view class="meta">
+        <text class="pct">{{item.pct == 100 ? '完成' : item.pct + '%'}}</text>
+        <view class="del" catchtap="del" data-id="{{item.id}}" hover-class="dim"><image src="/assets/trash-ink.svg"/></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty">
+    <image class="hero" src="/assets/logo.svg"/>
+    <view class="empty-title">第一幅画，从一张照片开始</view>
+    <view class="empty-text">选一张照片，自动变成带编号的像素格。一格一格涂满它。</view>
+  </view>
+
+  <view class="dock">
+    <view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="openSheet">
+      <image src="/assets/plus-paper.svg"/><text>导入照片</text>
+    </view>
+  </view>
+
+  <view class="scrim {{sheet ? 'show' : ''}}" bindtap="closeSheet"/>
+  <view class="sheet {{sheet ? 'show' : ''}}">
+    <view class="sheet-title">新作品</view>
+
+    <view class="label">格子数量<text class="hint">长边多少格，越多越细</text></view>
+    <view class="seg-pick">
+      <view wx:for="{{grids}}" wx:key="*this" class="chip {{index == gridIdx ? 'on' : ''}}" hover-class="pressed" data-i="{{index}}" bindtap="onGrid">{{item}}</view>
+    </view>
+
+    <view class="label">颜色数量<text class="hint">越多渐变越细腻</text></view>
+    <view class="stepper">
+      <view class="btn square" hover-class="pressed" data-d="-4" bindtap="onColors"><image src="/assets/minus-ink.svg"/></view>
+      <view class="num">{{colors}}</view>
+      <view class="btn square" hover-class="pressed" data-d="4" bindtap="onColors"><image src="/assets/plus-ink.svg"/></view>
+    </view>
+
+    <view class="row" bindtap="onWb">
+      <view class="label flat">自动白平衡<text class="hint">室内灯光偏黄时纠正颜色</text></view>
+      <view class="toggle {{wb ? 'on' : ''}}"><view class="knob"/></view>
+    </view>
+
+    <view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="importPhoto">
+      <image src="/assets/photo-paper.svg"/><text>从相册选择</text>
+    </view>
+  </view>
+</view>

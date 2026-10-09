@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/play/play"
+  ],
+  "window": {
+    "navigationBarTitleText": "像素填色",
+    "navigationBarBackgroundColor": "#f3ecdc",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f3ecdc"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
