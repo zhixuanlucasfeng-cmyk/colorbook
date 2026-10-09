@@ -1,17 +1,8 @@
 @import "font.wxss";
-
+@import "display.wxss";
 page {
-  --paper: #f3ecdc;
-  --paper-deep: #e2d8c0;
-  --card: #fffaf0;
-  --check: #f1e9d6;
-  --canvas: #e8dfc9;
-  --ink: #2a2438;
-  --muted: #625a70;
-  --tomato: #d23c1c;
-  --mint: #2fb88e;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "px", "PingFang SC", sans-serif;
-  -webkit-font-smoothing: none;
+  --paper: #f5f2e9; --paper-deep: #d8d5cc; --card: #fffdf7; --check: #eeeae0;
+  --canvas: #e5e5e3; --ink: #171715; --muted: #62615b; --tomato: #c53827; --mint: #171715;
+  background: var(--paper); color: var(--ink);
+  font-family: -apple-system, "PingFang SC", sans-serif;
 }

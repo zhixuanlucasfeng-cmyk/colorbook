@@ -31,7 +31,9 @@ Page({
     this.setData({
       list: store.metas().map(m => {
         const pct = Math.floor(m.done / m.total * 100);
-        return { id: m.id, thumb: m.thumb, pct, blocks: Math.floor(pct / 10) };
+        const d = new Date(m.created);
+        const date = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+        return { id: m.id, thumb: m.thumb, pct, date };
       }),
     });
   },

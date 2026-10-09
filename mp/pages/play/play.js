@@ -29,7 +29,7 @@ function draw() {
   queued = true;
   cv.requestAnimationFrame(() => {
     queued = false;
-    ctx.fillStyle = '#e8dfc9';
+    ctx.fillStyle = '#e5e5e3';
     ctx.fillRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(base, tx, ty, cur.w * s, cur.h * s);
@@ -48,7 +48,7 @@ function draw() {
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
       const i = y * cur.w + x;
       if (cur.filled[i]) continue;
-      ctx.fillStyle = cur.cells[i] === cur.sel ? '#fff' : '#77736b';
+      ctx.fillStyle = '#171715';
       ctx.fillText(String(cur.cells[i] + 1), tx + (x + 0.5) * s, ty + (y + 0.5) * s);
     }
   });
@@ -101,7 +101,7 @@ function bucket(x, y) {
 }
 
 function changed() {
-  page.setData({ done: cur.done, blocks: Math.floor(cur.done / cur.filled.length * 20) });
+  page.setData({ done: cur.done, percent: Math.floor(cur.done / cur.filled.length * 100), blocks: Math.floor(cur.done / cur.filled.length * 20), remaining: cur.left[cur.sel], saveState: '等待保存…' });
   clearTimeout(saveTimer);
   saveTimer = setTimeout(save, 800);
   draw();
@@ -110,14 +110,20 @@ function changed() {
 function save() {
   clearTimeout(saveTimer);
   if (!cur) return;
-  store.writeBin(`f-${cur.id}`, cur.filled);
-  store.putMeta({ ...cur.meta, palette: cur.palette, done: cur.done, thumb: thumbnail(cur.w, cur.h, cur.palette, cur.cells, cur.filled) });
+  try {
+    store.writeBin(`f-${cur.id}`, cur.filled);
+    store.putMeta({ ...cur.meta, palette: cur.palette, done: cur.done, thumb: thumbnail(cur.w, cur.h, cur.palette, cur.cells, cur.filled) });
+    page.setData({ saveState: '已保存' });
+  } catch (err) {
+    page.setData({ saveState: '保存失败' });
+    wx.showToast({ title: '保存失败，请检查存储空间', icon: 'none' });
+  }
 }
 
 function select(k) {
   cur.sel = k;
   rebuild();
-  page.setData({ sel: k, left: cur.left.slice(), hsl: hexToHsl(cur.palette[k]) });
+  page.setData({ sel: k, remaining: cur.left[k], left: cur.left.slice(), hsl: hexToHsl(cur.palette[k]) });
   draw();
 }
 
@@ -147,7 +153,7 @@ function startPaint() {
 }
 
 Page({
-  data: { palette: [], inks: [], left: [], sel: 0, done: 0, total: 0, blocks: 0, tool: 'brush', size: 1, recolor: false, hsl: [0, 0, 0] },
+  data: { percent: 0, remaining: 0, saveState: '已保存', palette: [], inks: [], left: [], sel: 0, done: 0, total: 0, blocks: 0, tool: 'brush', size: 1, recolor: false, hsl: [0, 0, 0] },
 
   onLoad({ id }) {
     page = this;
@@ -156,7 +162,7 @@ Page({
     const left = meta.palette.map(() => 0);
     cells.forEach((c, i) => filled[i] || left[c]++);
     cur = { id, meta, w: meta.w, h: meta.h, palette: meta.palette.slice(), cells, filled, left, done: filled.reduce((a, b) => a + b, 0), sel: 0, size: 1 };
-    this.setData({ palette: cur.palette, inks: cur.palette.map(inkOf), total: cells.length, done: cur.done, blocks: Math.floor(cur.done / cells.length * 20), left: left.slice() });
+    this.setData({ palette: cur.palette, inks: cur.palette.map(inkOf), total: cells.length, done: cur.done, percent: Math.floor(cur.done / cells.length * 100), blocks: Math.floor(cur.done / cells.length * 20), left: left.slice() });
   },
 
   onReady() {

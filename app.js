@@ -1,3 +1,5 @@
+import { inkOf } from './mp/utils/art.js';
+
 const $ = s => document.querySelector(s);
 // Show any crash on screen: there is no console on the iPad.
 const oops = e => {
@@ -34,19 +36,29 @@ navigator.storage?.persist?.();
 if ('serviceWorker' in navigator && isSecureContext) navigator.serviceWorker.register('sw.js');
 
 // ---- home ----
-$('#colors').oninput = e => $('#colorsOut').textContent = e.target.value;
+function updateSettings() {
+  $('#colorsOut').textContent = $('#colors').value;
+  $('#settingsSummary').textContent = `${$('#detail').value} 格 · ${$('#colors').value} 色`;
+}
+$('#colors').oninput = updateSettings;
+$('#detail').onchange = updateSettings;
+$('#import').onclick = () => $('#file').click();
 
 async function showHome() {
   play.hidden = true; home.hidden = false;
   const metas = (await db('meta', 'readonly', s => s.getAll())).sort((a, b) => b.created - a.created);
   const g = $('#gallery');
-  g.innerHTML = metas.length ? '' : '<p class="empty">还没有作品，导入一张照片开始吧。</p>';
+  $('#artCount').textContent = String(metas.length).padStart(2, '0');
+  g.innerHTML = metas.length ? '' : '<div class="empty"><div class="empty-mark" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div><h3>第一幅画，从一张照片开始。</h3><p>选一张喜欢的照片，一格一格涂上自己的颜色。</p></div>';
   for (const m of metas) {
     const done = m.filled.reduce((a, b) => a + b, 0);
     const card = document.createElement('div');
     card.className = 'card';
-    card.innerHTML = `<img src="${m.thumb}" alt="" style="image-rendering:pixelated"><div class="meta"><span>${Math.floor(done / m.filled.length * 100)}%</span><button class="del">删除</button></div>`;
-    card.onclick = () => open(m.id);
+    const pct = Math.floor(done / m.filled.length * 100);
+    const title = pct === 100 ? '完成的作品' : '未完成的作品';
+    const date = new Date(m.created).toLocaleDateString('zh-CN');
+    card.innerHTML = `<button class="card-open" aria-label="${title}，已完成 ${pct}%，点击继续填色"><img src="${m.thumb}" alt="作品预览"><div class="meta"><div><span class="card-title">${title}</span><span class="card-date">${date}</span></div><div class="card-progress">已完成 ${pct}%<i><b style="width:${pct}%"></b></i></div><span class="continue">${pct === 100 ? '查看作品' : '继续填色'}</span></div></button><button class="del" aria-label="删除这幅作品"><img src="mp/assets/trash-ink.svg" alt=""></button>`;
+    card.querySelector('.card-open').onclick = () => open(m.id);
     card.querySelector('.del').onclick = async e => {
       e.stopPropagation();
       if (!confirm('删除这幅作品？')) return;
@@ -63,7 +75,8 @@ $('#file').onchange = async e => {
   e.target.value = '';
   if (!file) return;
   const status = $('#status');
-  status.textContent = '生成中…';
+  status.textContent = '正在把照片变成像素画…';
+  $('#import').disabled = true;
   try {
     const img = await createImageBitmap(file);
     const long = +$('#detail').value, F = Math.min(4, Math.max(1, Math.floor(2400 / long))); // iOS caps canvas area
@@ -86,7 +99,9 @@ $('#file').onchange = async e => {
     status.textContent = '';
     open(id);
   } catch (err) {
-    status.textContent = '生成失败：' + err;
+    status.textContent = '生成失败，请重试：' + err;
+  } finally {
+    $('#import').disabled = false;
   }
 };
 
@@ -123,13 +138,13 @@ let cur = null, sel = 0, left = [], done = 0, base = null, saveTimer = 0, tool =
 async function open(id) {
   const [p, m] = await Promise.all([db('art', 'readonly', s => s.get(id)), db('meta', 'readonly', s => s.get(id))]);
   cur = { ...p, meta: m, filled: m.filled };
-  home.hidden = true; play.hidden = false; $('#done').hidden = true;
+  home.hidden = true; play.hidden = false; $('#done').hidden = true; $('#saveState').textContent = '已保存';
   left = p.palette.map(() => 0);
   p.cells.forEach((c, i) => cur.filled[i] || left[c]++);
   done = cur.filled.reduce((a, b) => a + b, 0);
   base = canvas(p.w, p.h);
   $('#palette').innerHTML = p.palette.map((hex, k) =>
-    `<button data-k="${k}" style="background:${hex};color:${lum(rgbOf(hex)) > 150 ? '#222' : '#fff'}">${k + 1}</button>`).join('');
+    `<button data-k="${k}" style="background:${hex};color:${inkOf(hex)}">${k + 1}</button>`).join('');
   resize();
   fit();
   select(Math.max(0, left.findIndex(n => n > 0)));
@@ -141,8 +156,11 @@ function select(k) {
   base.putImageData(bitmap(cur, cur.filled, sel), 0, 0);
   document.querySelectorAll('#palette button').forEach((b, j) => {
     b.classList.toggle('on', j === k);
+    b.setAttribute('aria-pressed', String(j === k));
+    b.setAttribute('aria-label', `${j + 1}号色，剩余${left[j]}格`);
     b.classList.toggle('done', !left[j]);
   });
+  $('#selectedInfo').textContent = `${k + 1}号色 · 剩余 ${left[k]} 格`;
   $('#pick').value = cur.palette[k];
   document.querySelector('#palette .on')?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
   draw();
@@ -151,7 +169,7 @@ $('#tools').onclick = e => {
   const t = e.target.closest('[data-tool]')?.dataset.tool;
   if (!t) return;
   tool = t;
-  document.querySelectorAll('[data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === tool));
+  document.querySelectorAll('[data-tool]').forEach(b => { b.classList.toggle('on', b.dataset.tool === tool); b.setAttribute('aria-pressed', String(b.dataset.tool === tool)); });
   $('#sizeBox').hidden = tool !== 'brush';
 };
 $('#size').oninput = e => { size = +e.target.value; $('#sizeOut').textContent = size; };
@@ -160,14 +178,14 @@ $('#pick').oninput = e => {
   cur.palette[sel] = e.target.value;
   const b = document.querySelectorAll('#palette button')[sel];
   b.style.background = e.target.value;
-  b.style.color = lum(rgbOf(e.target.value)) > 150 ? '#222' : '#fff';
+  b.style.color = inkOf(e.target.value);
   base.putImageData(bitmap(cur, cur.filled, sel), 0, 0);
   draw();
 };
-$('#pick').onchange = () => {
+$('#pick').onchange = async () => {
   const { id, w, h, palette, cells } = cur;
-  db('art', 'readwrite', s => s.put({ id, w, h, palette, cells }));
-  save();
+  await db('art', 'readwrite', s => s.put({ id, w, h, palette, cells }));
+  await save();
 };
 $('#palette').onclick = e => { const k = e.target.dataset?.k; if (k != null) select(+k); };
 
@@ -209,6 +227,7 @@ function bucket(x, y) {
 }
 
 function changed() {
+  $('#saveState').textContent = '等待保存…';
   progress();
   clearTimeout(saveTimer);
   saveTimer = setTimeout(save, 800);
@@ -224,7 +243,11 @@ function nextIfDone() {
 }
 
 function progress() {
-  $('#progress').textContent = `${done} / ${cur.filled.length}`;
+  const pct = Math.floor(done / cur.filled.length * 100);
+  $('#progress').textContent = `${pct}% 已完成`;
+  $('#progress').title = `${done} / ${cur.filled.length} 格`;
+  $('#progressBar').value = pct;
+  $('#selectedInfo').textContent = `${sel + 1}号色 · 剩余 ${left[sel]} 格`;
 }
 
 function save() {
@@ -232,7 +255,8 @@ function save() {
   if (!cur) return Promise.resolve();
   cur.meta.filled = cur.filled;
   cur.meta.thumb = thumbnail(cur, cur.filled);
-  return db('meta', 'readwrite', s => s.put(cur.meta));
+  $('#saveState').textContent = '保存中…';
+  return db('meta', 'readwrite', s => s.put(cur.meta)).then(() => { $('#saveState').textContent = '已保存'; }, err => { $('#saveState').textContent = '保存失败，请重试'; throw err; });
 }
 $('#back').onclick = async () => { await save(); cur = null; showHome(); };
 document.addEventListener('visibilitychange', () => document.hidden && save());
@@ -240,7 +264,7 @@ document.addEventListener('visibilitychange', () => document.hidden && save());
 // ---- drawing: s = screen px per cell; grid at >= 6px, numbers at >= 14px, only for visible cells ----
 let s = 1, tx = 0, ty = 0, W = 0, H = 0, queued = false;
 function resize() {
-  const r = stage.getBoundingClientRect(), dpr = devicePixelRatio || 1;
+  const r = cv.getBoundingClientRect(), dpr = devicePixelRatio || 1;
   W = r.width; H = r.height;
   cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -256,7 +280,7 @@ function draw() {
   requestAnimationFrame(() => {
     queued = false;
     if (!cur) return;
-    ctx.fillStyle = '#ebe8e0';
+    ctx.fillStyle = '#e5e5e3';
     ctx.fillRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(base.canvas, tx, ty, cur.w * s, cur.h * s);
@@ -275,7 +299,7 @@ function draw() {
     for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) {
       const i = y * cur.w + x;
       if (cur.filled[i]) continue;
-      ctx.fillStyle = cur.cells[i] === sel ? '#fff' : '#77736b';
+      ctx.fillStyle = '#171715';
       ctx.fillText(cur.cells[i] + 1, tx + (x + 0.5) * s, ty + (y + 0.5) * s);
     }
   });
@@ -290,7 +314,7 @@ function zoomAt(px, py, f) {
 // A finger waits briefly before painting so the first finger of a pinch doesn't paint.
 const pts = new Map();
 let g = null;
-const local = e => { const r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+const local = e => { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
 const cellAt = p => [Math.floor((p.x - tx) / s), Math.floor((p.y - ty) / s)];
 function paintTo(p) {
   const [x, y] = cellAt(p), [lx, ly] = g.last || [x, y];
@@ -355,6 +379,7 @@ stage.addEventListener('wheel', e => {
   if (e.ctrlKey) { const p = local(e); zoomAt(p.x, p.y, Math.exp(-e.deltaY / 100)); }
   else { tx -= e.deltaX; ty -= e.deltaY; draw(); }
 }, { passive: false });
-addEventListener('resize', () => { if (cur) { resize(); draw(); } });
+// Tools can change the available canvas height without a window resize.
+new ResizeObserver(() => { if (cur) { resize(); draw(); } }).observe(stage);
 
 showHome();

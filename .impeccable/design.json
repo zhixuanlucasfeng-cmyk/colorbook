@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-09T09:28:40.128907+00:00",
+  "title": "Design System: 像素填色",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "纸白",
+        "tonalRamp": [
+          "oklch(15% 0.025 85)",
+          "oklch(27% 0.025 85)",
+          "oklch(38% 0.025 85)",
+          "oklch(50% 0.025 85)",
+          "oklch(61% 0.025 85)",
+          "oklch(73% 0.025 85)",
+          "oklch(84% 0.025 85)",
+          "oklch(95% 0.025 85)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "卡纸白",
+        "tonalRamp": [
+          "oklch(15% 0.018 85)",
+          "oklch(27% 0.018 85)",
+          "oklch(38% 0.018 85)",
+          "oklch(50% 0.018 85)",
+          "oklch(61% 0.018 85)",
+          "oklch(73% 0.018 85)",
+          "oklch(84% 0.018 85)",
+          "oklch(95% 0.018 85)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "墨黑",
+        "tonalRamp": [
+          "oklch(15% 0.004 95)",
+          "oklch(27% 0.004 95)",
+          "oklch(38% 0.004 95)",
+          "oklch(50% 0.004 95)",
+          "oklch(61% 0.004 95)",
+          "oklch(73% 0.004 95)",
+          "oklch(84% 0.004 95)",
+          "oklch(95% 0.004 95)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "灰字",
+        "tonalRamp": [
+          "oklch(15% 0.012 95)",
+          "oklch(27% 0.012 95)",
+          "oklch(38% 0.012 95)",
+          "oklch(50% 0.012 95)",
+          "oklch(61% 0.012 95)",
+          "oklch(73% 0.012 95)",
+          "oklch(84% 0.012 95)",
+          "oklch(95% 0.012 95)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "分隔灰",
+        "tonalRamp": [
+          "oklch(15% 0.012 85)",
+          "oklch(27% 0.012 85)",
+          "oklch(38% 0.012 85)",
+          "oklch(50% 0.012 85)",
+          "oklch(61% 0.012 85)",
+          "oklch(73% 0.012 85)",
+          "oklch(84% 0.012 85)",
+          "oklch(95% 0.012 85)"
+        ]
+      },
+      "primary": {
+        "role": "primary",
+        "displayName": "朱红",
+        "tonalRamp": [
+          "oklch(15% 0.18 30)",
+          "oklch(27% 0.18 30)",
+          "oklch(38% 0.18 30)",
+          "oklch(50% 0.18 30)",
+          "oklch(61% 0.18 30)",
+          "oklch(73% 0.18 30)",
+          "oklch(84% 0.18 30)",
+          "oklch(95% 0.18 30)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "深朱红",
+        "tonalRamp": [
+          "oklch(15% 0.17 30)",
+          "oklch(27% 0.17 30)",
+          "oklch(38% 0.17 30)",
+          "oklch(50% 0.17 30)",
+          "oklch(61% 0.17 30)",
+          "oklch(73% 0.17 30)",
+          "oklch(84% 0.17 30)",
+          "oklch(95% 0.17 30)"
+        ]
+      },
+      "headline-mark": {
+        "role": "primary",
+        "displayName": "标题红",
+        "tonalRamp": [
+          "oklch(15% 0.19 30)",
+          "oklch(27% 0.19 30)",
+          "oklch(38% 0.19 30)",
+          "oklch(50% 0.19 30)",
+          "oklch(61% 0.19 30)",
+          "oklch(73% 0.19 30)",
+          "oklch(84% 0.19 30)",
+          "oklch(95% 0.19 30)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "画布灰",
+        "tonalRamp": [
+          "oklch(15% 0.003 100)",
+          "oklch(27% 0.003 100)",
+          "oklch(38% 0.003 100)",
+          "oklch(50% 0.003 100)",
+          "oklch(61% 0.003 100)",
+          "oklch(73% 0.003 100)",
+          "oklch(84% 0.003 100)",
+          "oklch(95% 0.003 100)"
+        ]
+      },
+      "control-hover": {
+        "role": "neutral",
+        "displayName": "悬停纸色",
+        "tonalRamp": [
+          "oklch(15% 0.018 85)",
+          "oklch(27% 0.018 85)",
+          "oklch(38% 0.018 85)",
+          "oklch(50% 0.018 85)",
+          "oklch(61% 0.018 85)",
+          "oklch(73% 0.018 85)",
+          "oklch(84% 0.018 85)",
+          "oklch(95% 0.018 85)"
+        ]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "深纸灰",
+        "tonalRamp": [
+          "oklch(15% 0.014 85)",
+          "oklch(27% 0.014 85)",
+          "oklch(38% 0.014 85)",
+          "oklch(50% 0.014 85)",
+          "oklch(61% 0.014 85)",
+          "oklch(73% 0.014 85)",
+          "oklch(84% 0.014 85)",
+          "oklch(95% 0.014 85)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "纯白",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "black": {
+        "role": "neutral",
+        "displayName": "纯黑",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "品牌刊头",
+        "purpose": "Noto Sans SC 本地子集，标题使用 900 字重；小程序别名 cb-display。"
+      },
+      "body": {
+        "displayName": "系统正文",
+        "purpose": "中文操作与说明保持可读。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "completion-print-offset",
+        "value": "8px 8px 0 var(--accent, #c53827)",
+        "purpose": "仅网页完成提示。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-press",
+        "value": "translateY(1px)",
+        "purpose": "网页按钮按下位移，无持续动画。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "网页移除 transition 与 animation。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-max",
+        "value": "600px"
+      },
+      {
+        "name": "wide-min",
+        "value": "800px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "导入照片",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "朱红主操作。",
+      "html": "<button class=\"ds-primary\">导入照片</button>",
+      "css": ".ds-primary{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:var(--accent,#c53827);border-color:var(--accent,#c53827);color:#fff}.ds-primary:hover{background:#ab2c1d}.ds-primary:active{transform:translateY(1px)}.ds-primary:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "普通工具",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "卡纸底普通操作。",
+      "html": "<button class=\"ds-secondary\">画笔</button>",
+      "css": ".ds-secondary{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:var(--card,#fffdf7);color:var(--ink,#171715)}.ds-secondary:hover{background:#e8e4d9}.ds-secondary:active{transform:translateY(1px)}.ds-secondary:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "选中工具",
+      "kind": "button",
+      "refersTo": "tool-selected",
+      "description": "黑底表示当前工具。",
+      "html": "<button class=\"ds-tool\" aria-pressed=\"true\">油漆桶</button>",
+      "css": ".ds-tool{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:var(--ink,#171715);color:var(--paper,#f5f2e9)}.ds-tool:hover{background:#e8e4d9}.ds-tool:active{transform:translateY(1px)}.ds-tool:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "格数选择器",
+      "kind": "input",
+      "refersTo": "select",
+      "description": "网页原生选择器。",
+      "html": "<label class=\"ds-label\">长边格数 <select class=\"ds-select\"><option>320</option><option>480</option><option>800（超细）</option></select></label>",
+      "css": ".ds-label{font:14px -apple-system,\"PingFang SC\",sans-serif;color:var(--ink,#171715)}.ds-select{font:inherit;min-height:44px;padding:5px 10px;border:1px solid var(--ink,#171715);border-radius:0;background:var(--card,#fffdf7);color:inherit}.ds-select:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "设置选项",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "小程序三列选项的选中状态；预览使用按钮表达。",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">320</button>",
+      "css": ".ds-chip{width:110px;height:44px;border:1px solid var(--ink,#171715);border-radius:0;background:var(--ink,#171715);color:var(--paper,#f5f2e9);font:16px -apple-system,\"PingFang SC\",sans-serif}.ds-chip:active{opacity:.85}.ds-chip:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "作品画框",
+      "kind": "card",
+      "refersTo": "card-frame",
+      "description": "空态与作品共享的卡纸粗框。",
+      "html": "<div class=\"ds-frame\">导入一张喜欢的照片</div>",
+      "css": ".ds-frame{padding:40px 20px;border:2px solid var(--ink,#171715);background:var(--card,#fffdf7);color:var(--ink,#171715);text-align:center;font:19px -apple-system,\"PingFang SC\",sans-serif}"
+    },
+    {
+      "name": "返回作品集",
+      "kind": "nav",
+      "refersTo": "button-secondary",
+      "description": "工作台简洁返回入口。",
+      "html": "<nav><button class=\"ds-back\"><span aria-hidden=\"true\">‹</span> 返回作品集</button></nav>",
+      "css": ".ds-back{font-family:-apple-system,\"PingFang SC\",sans-serif;font-size:16px;font-weight:650;min-height:44px;padding:10px 16px;border:1px solid var(--ink,#171715);border-radius:2px;cursor:pointer;background:transparent;border:0;padding:8px 0;color:var(--ink,#171715)}.ds-back span{font-size:30px;line-height:20px}.ds-back:hover{background:#e8e4d9}.ds-back:active{transform:translateY(1px)}.ds-back:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    },
+    {
+      "name": "选中色板",
+      "kind": "custom",
+      "description": "作品色板示例；色值仅为预览，编号按黑白对比度选择。",
+      "html": "<button class=\"ds-swatch\" aria-label=\"选择填色编号 1\" aria-pressed=\"true\">1</button>",
+      "css": ".ds-swatch{position:relative;width:52px;height:58px;margin:8px 8px 18px;border:1px solid var(--ink,#171715);border-radius:2px;background:#ef5540;color:#000;font:650 18px -apple-system,\"PingFang SC\",sans-serif;outline:2px solid var(--ink,#171715);outline-offset:3px}.ds-swatch::after{content:\"\";position:absolute;bottom:-13px;left:20px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:6px solid var(--ink,#171715)}.ds-swatch:active{transform:translateY(1px)}.ds-swatch:focus-visible{outline:3px solid var(--accent,#c53827);outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "漫画印刷感",
+    "overview": "以用户确认的「漫画印刷感：黑白、朱红、粗线条，涂色区安静清楚」为视觉准则。首页借重黑刊头、粗字、锯齿纸边和朱红标记形成印刷品的力度；进入工作台后，装饰退到画布之外，照片本身和数字格子成为主角。\n\n界面文案使用中文，正文保持系统字体的清楚易读。漫画气质来自排版与线条，不依赖角色插画。设计参考已确认的 `.impeccable/approved-concept.png`；本文记录当前 PWA 与微信小程序的实现，未将样式代码检查视作微信原生环境的视觉验收。",
+    "keyCharacteristics": [
+      "重黑刊头与少量朱红形成印刷感。",
+      "作品缩略图保留像素边缘，工具和画布保持清楚。",
+      "近直角、实线边框、少量硬阴影；正文使用系统中文字体。"
+    ],
+    "rules": [
+      {
+        "name": "The Canvas Clarity Rule",
+        "body": "画布底色保持中性，格内数字使用墨黑；色板编号依据颜色对比度选纯黑或纯白，不能统一染成品牌红。",
+        "section": "colors"
+      },
+      {
+        "name": "The Readable Body Rule",
+        "body": "展示字体只承担品牌名；长文、工具、数字提示继续使用清楚的系统字体。",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Paper Rule",
+        "body": "日常操作保持平面；硬阴影只沿用已实现的完成提示，不扩散到普通作品卡片。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do 将朱红用于导入、作品进度和关键标记，工作台进度与工具选中使用墨黑。",
+      "Do 保留中性灰画布背景、清楚的格内数字和基于对比度的色板编号。",
+      "Do 为按钮保留至少 44px 的主要触控区域，并照顾设备安全区。",
+      "Do 新增品牌标题字符时重新生成本地字体子集；正文继续使用系统字体。"
+    ],
+    "donts": [
+      "Don't 把作品的任意颜色当作全局品牌色。",
+      "Don't 用漫画装饰遮挡画布、数字、色板或手势操作。",
+      "Don't 把全局正文改成展示字体或像素字体。",
+      "Don't 给普通卡片添加柔和浮层阴影、胶囊轮廓或多色渐变。"
+    ]
+  }
+}

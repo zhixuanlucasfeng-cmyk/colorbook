@@ -1,82 +1,44 @@
 <!doctype html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="填色">
+<meta name="apple-mobile-web-app-title" content="像素填色">
+<meta name="theme-color" content="#171715">
 <link rel="manifest" href="manifest.json">
-<title>数字填色</title>
-<style>
-  :root { --bg: #f6f4ef; --ink: #2b2a27; --muted: #8a867d; --card: #fff; --line: #e4e0d6; --accent: #d9603b; }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
-    font: 16px/1.4 -apple-system, "PingFang SC", system-ui, sans-serif; -webkit-user-select: none; user-select: none; }
-  button, .btn { font: inherit; border: 0; border-radius: 12px; padding: 10px 16px; background: var(--card); color: var(--ink); cursor: pointer; }
-  .primary { background: var(--accent); color: #fff; font-weight: 600; }
-  [hidden] { display: none !important; }
-  .err { position: fixed; z-index: 9; left: 16px; right: 16px; top: max(16px, env(safe-area-inset-top)); padding: 12px 16px; border-radius: 12px; background: #b3261e; color: #fff; }
-
-  #home { max-width: 1100px; margin: 0 auto; padding: max(24px, env(safe-area-inset-top)) 24px 40px; }
-  h1 { font-size: 32px; margin: 8px 0 20px; }
-  .new { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; background: var(--card); padding: 16px 20px; border-radius: 16px; }
-  .new label:not(.btn) { display: flex; gap: 10px; align-items: center; color: var(--muted); }
-  .new input[type=range] { width: 160px; }
-  .new select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); }
-  #status { color: var(--muted); }
-  #gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 28px; }
-  .card { background: var(--card); border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; }
-  .card img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #fff; }
-  .card .meta { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 14px; }
-  .card .del { padding: 4px 8px; background: none; color: var(--muted); }
-  .empty { color: var(--muted); grid-column: 1 / -1; }
-
-  #play { position: fixed; inset: 0; display: flex; flex-direction: column; background: var(--bg); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: max(10px, env(safe-area-inset-top)) 16px 10px; }
-  #tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
-  #recolor { position: relative; }
-  #pick { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
-  #tools button.on { background: var(--ink); color: #fff; }
-  #tools label { display: flex; gap: 8px; align-items: center; color: var(--muted); margin-left: 8px; }
-  #tools input[type=range] { width: 180px; }
-  #progress { color: var(--muted); font-variant-numeric: tabular-nums; }
-  #stage { flex: 1; touch-action: none; background: #ebe8e0; overflow: hidden; }
-  #stage canvas { width: 100%; height: 100%; display: block; }
-  #palette { display: flex; gap: 10px; overflow-x: auto; padding: 12px 16px max(12px, env(safe-area-inset-bottom)); }
-  #palette button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; padding: 0; font-weight: 700; font-size: 16px;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); position: relative; }
-  #palette button.on { box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--ink); }
-  #palette button.done { opacity: .35; }
-  #done { position: fixed; left: 50%; top: 40%; transform: translate(-50%, -50%); background: var(--card); padding: 20px 32px;
-    border-radius: 16px; font-size: 22px; box-shadow: 0 10px 40px rgba(0,0,0,.15); }
-</style>
+<link rel="stylesheet" href="style.css?v=6">
+<title>像素填色</title>
 </head>
 <body>
 <main id="home">
-  <h1>数字填色</h1>
-  <div class="new">
-    <label class="btn primary" for="file">导入照片</label>
-    <input id="file" type="file" accept="image/*" hidden>
-    <label>颜色 <input id="colors" type="range" min="8" max="64" value="32"> <b id="colorsOut">32</b></label>
-    <label>格子 <select id="detail"><option value="120">120</option><option value="200">200</option><option value="320" selected>320</option><option value="480">480</option><option value="640">640</option><option value="800">800（超细）</option></select></label>
-    <label><input id="wb" type="checkbox" checked> 自动白平衡</label>
-    <span id="status"></span>
-  </div>
-  <div id="gallery"></div>
+  <header class="masthead"><div><h1>像素填色<span aria-hidden="true">!</span></h1><p>把照片，一格格变成作品。</p></div><div class="head-note">自己的照片<br>自己的颜色</div></header>
+  <section class="collection" aria-labelledby="collectionTitle">
+    <div class="section-head"><h2 id="collectionTitle">我的作品</h2><span id="artCount">00</span></div>
+    <div id="gallery"></div>
+  </section>
+  <details class="settings"><summary>新作品设置 <span id="settingsSummary">320 格 · 32 色</span></summary>
+    <div class="new">
+      <label>颜色数量 <input id="colors" type="range" min="8" max="64" value="32"> <b id="colorsOut">32</b></label>
+      <label>长边格数 <select id="detail"><option value="120">120</option><option value="200">200</option><option value="320" selected>320</option><option value="480">480</option><option value="640">640</option><option value="800">800（超细）</option></select></label>
+      <label class="wb"><input id="wb" type="checkbox" checked> 自动白平衡</label>
+      <p class="setting-hint">格数越多，细节越丰富；颜色越多，渐变越细腻。</p>
+    </div>
+  </details>
+  <div class="import-dock"><button id="import" class="primary"><img src="mp/assets/plus-paper.svg" alt="">导入照片</button><input id="file" type="file" accept="image/*" hidden><p id="status" role="status"></p><p class="promise">本机处理 · 离线可用 · 没有广告</p></div>
 </main>
-
-<section id="play" hidden>
-  <div class="bar"><button id="back">← 返回</button>
-    <div id="tools"><button data-tool="brush" class="on">🖌 画笔</button><button data-tool="bucket">🪣 油漆桶</button>
-      <label class="btn" id="recolor">🎨 改色<input id="pick" type="color"></label>
-      <label id="sizeBox">粗细 <input id="size" type="range" min="1" max="25" value="1"> <b id="sizeOut">1</b></label></div>
-    <span id="progress"></span></div>
-  <div id="stage"><canvas></canvas></div>
-  <div id="palette"></div>
-  <div id="done" hidden>完成了 🎉</div>
+<section id="play" hidden aria-label="涂色工作台">
+  <div class="play-header"><button id="back"><span aria-hidden="true">‹</span> 返回作品集</button><span id="saveState" role="status">已保存</span></div>
+  <div class="progress-row"><progress id="progressBar" max="100" value="0" aria-label="填色进度"></progress><span id="progress"></span></div>
+  <div id="stage"><canvas aria-label="数字填色画布：单指或画笔涂色，双指移动和缩放"></canvas></div>
+  <div id="tools">
+    <div class="tool-buttons"><button data-tool="brush" class="on" aria-pressed="true"><img src="mp/assets/brush-ink.svg" alt="">画笔</button><button data-tool="bucket" aria-pressed="false"><img src="mp/assets/bucket-ink.svg" alt="">油漆桶</button><label class="btn" id="recolor"><img src="mp/assets/palette-ink.svg" alt="">改色<input id="pick" type="color" aria-label="修改当前颜色"></label></div>
+    <label id="sizeBox">粗细 <input id="size" type="range" min="1" max="25" value="1"><span><b id="sizeOut">1</b> 格</span></label>
+  </div>
+  <div class="palette-heading"><strong id="selectedInfo"></strong><span>双指移动与缩放</span></div>
+  <div id="palette" aria-label="选择填色编号"></div>
+  <div id="done" role="status" hidden><strong>这一幅，完成！</strong><span>每一格，都是你的颜色。</span></div>
 </section>
-
-<script type="module" src="app.js?v=5"></script>
+<script type="module" src="app.js?v=6"></script>
 </body>
 </html>

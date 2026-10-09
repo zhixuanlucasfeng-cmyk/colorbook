@@ -5,9 +5,9 @@
   ],
   "window": {
     "navigationBarTitleText": "像素填色",
-    "navigationBarBackgroundColor": "#f3ecdc",
+    "navigationBarBackgroundColor": "#f5f2e9",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f3ecdc"
+    "backgroundColor": "#f5f2e9"
   },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents"

@@ -1,58 +1,26 @@
 <view class="page">
-  <view class="head">
-    <image class="logo" src="/assets/logo.svg"/>
-    <view>
-      <view class="brand">像素填色</view>
-      <view class="sub">{{list.length ? list.length + ' 幅作品' : '把照片变成数字像素画'}}</view>
-    </view>
-  </view>
-
+  <view class="head"><view class="brand">像素填色<text>!</text></view><view class="sub">把照片，一格格变成作品。</view><view class="teeth"/></view>
+  <view class="section-head"><view>我的作品</view><text class="total">{{list.length < 10 ? '0' + list.length : list.length}}</text></view>
   <view wx:if="{{list.length}}" class="grid">
-    <view wx:for="{{list}}" wx:key="id" class="card" hover-class="pressed" hover-stay-time="60" bindtap="open" data-id="{{item.id}}">
+    <view wx:for="{{list}}" wx:key="id" class="card {{index == 0 ? 'featured' : ''}}" hover-class="pressed" hover-stay-time="60" bindtap="open" data-id="{{item.id}}" role="button" aria-label="打开作品">
       <view class="frame"><image class="thumb" src="{{item.thumb}}" mode="aspectFit"/></view>
-      <view class="bar"><view wx:for="{{10}}" wx:for-item="b" wx:key="*this" class="seg {{b < item.blocks ? 'on' : ''}}"/></view>
-      <view class="meta">
-        <text class="pct">{{item.pct == 100 ? '完成' : item.pct + '%'}}</text>
-        <view class="del" catchtap="del" data-id="{{item.id}}" hover-class="dim"><image src="/assets/trash-ink.svg"/></view>
+      <view class="meta"><view class="description"><view class="card-title">{{item.pct == 100 ? '完成的作品' : '未完成的作品'}}</view><view class="date">{{item.date}}</view></view>
+        <view class="progress"><text>已完成 {{item.pct}}%</text><view class="bar"><view class="fill" style="width: {{item.pct}}%"/></view></view>
+        <view class="del" catchtap="del" data-id="{{item.id}}" hover-class="dim" role="button" aria-label="删除这幅作品"><image src="/assets/trash-ink.svg"/></view>
       </view>
+      <view wx:if="{{index == 0}}" class="continue">{{item.pct == 100 ? '查看作品' : '继续填色'}}<text>›</text></view>
     </view>
   </view>
-
-  <view wx:else class="empty">
-    <image class="hero" src="/assets/logo.svg"/>
-    <view class="empty-title">第一幅画，从一张照片开始</view>
-    <view class="empty-text">选一张照片，自动变成带编号的像素格。一格一格涂满它。</view>
-  </view>
-
-  <view class="dock">
-    <view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="openSheet">
-      <image src="/assets/plus-paper.svg"/><text>导入照片</text>
-    </view>
-  </view>
-
+  <view wx:else class="empty"><view class="empty-mark"><text>1</text><text class="red">2</text><text>3</text></view><view class="empty-title">第一幅画，从一张照片开始。</view><view class="empty-text">选一张喜欢的照片，一格一格涂上自己的颜色。</view></view>
+  <view class="dock"><view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="openSheet" role="button" aria-label="导入照片"><image src="/assets/plus-paper.svg"/><text>导入照片</text></view><view class="promise">本机处理 · 离线可用 · 没有广告</view></view>
   <view class="scrim {{sheet ? 'show' : ''}}" bindtap="closeSheet"/>
   <view class="sheet {{sheet ? 'show' : ''}}">
-    <view class="sheet-title">新作品</view>
-
-    <view class="label">格子数量<text class="hint">长边多少格，越多越细</text></view>
-    <view class="seg-pick">
-      <view wx:for="{{grids}}" wx:key="*this" class="chip {{index == gridIdx ? 'on' : ''}}" hover-class="pressed" data-i="{{index}}" bindtap="onGrid">{{item}}</view>
-    </view>
-
-    <view class="label">颜色数量<text class="hint">越多渐变越细腻</text></view>
-    <view class="stepper">
-      <view class="btn square" hover-class="pressed" data-d="-4" bindtap="onColors"><image src="/assets/minus-ink.svg"/></view>
-      <view class="num">{{colors}}</view>
-      <view class="btn square" hover-class="pressed" data-d="4" bindtap="onColors"><image src="/assets/plus-ink.svg"/></view>
-    </view>
-
-    <view class="row" bindtap="onWb">
-      <view class="label flat">自动白平衡<text class="hint">室内灯光偏黄时纠正颜色</text></view>
-      <view class="toggle {{wb ? 'on' : ''}}"><view class="knob"/></view>
-    </view>
-
-    <view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="importPhoto">
-      <image src="/assets/photo-paper.svg"/><text>从相册选择</text>
-    </view>
+    <view class="sheet-header"><view class="sheet-title">新作品</view><view class="close" bindtap="closeSheet" role="button" aria-label="关闭新作品设置">关闭</view></view>
+    <view class="label">长边格数<text class="hint">格数越多，细节越丰富</text></view>
+    <view class="seg-pick"><view wx:for="{{grids}}" wx:key="*this" class="chip {{index == gridIdx ? 'on' : ''}}" hover-class="pressed" data-i="{{index}}" bindtap="onGrid" role="button">{{item}}</view></view>
+    <view class="label">颜色数量<text class="hint">颜色越多，渐变越细腻</text></view>
+    <view class="stepper"><view class="btn square" hover-class="pressed" data-d="-4" bindtap="onColors" role="button" aria-label="减少颜色"><image src="/assets/minus-ink.svg"/></view><view class="num">{{colors}}</view><view class="btn square" hover-class="pressed" data-d="4" bindtap="onColors" role="button" aria-label="增加颜色"><image src="/assets/plus-ink.svg"/></view></view>
+    <view class="row" bindtap="onWb" role="checkbox" aria-checked="{{wb}}"><view><view class="label flat">自动白平衡</view><view class="hint">纠正室内灯光造成的偏黄</view></view><view class="toggle {{wb ? 'on' : ''}}"><view class="knob"/></view></view>
+    <view class="btn primary big" hover-class="pressed" hover-stay-time="60" bindtap="importPhoto" role="button"><image src="/assets/photo-paper.svg"/><text>{{busy ? '生成中…' : '从相册选择'}}</text></view>
   </view>
 </view>

@@ -2,7 +2,12 @@ import { pngDataURL } from './png.js';
 
 export const rgbOf = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
 export const lum = ([r, g, b]) => 0.299 * r + 0.587 * g + 0.114 * b;
-export const inkOf = hex => (lum(rgbOf(hex)) > 150 ? '#222' : '#fff');
+// Pick the higher-contrast foreground using linear sRGB luminance.
+export const inkOf = hex => {
+  const linear = rgbOf(hex).map(v => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+  const light = linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+  return (light + 0.05) / 0.05 >= 1.05 / (light + 0.05) ? '#000' : '#fff';
+};
 
 // Color of one cell: filled = its color, unfilled = faint grey of the photo, selected number = dark grey.
 export function shader(palette, sel) {

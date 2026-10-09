@@ -2,7 +2,7 @@
 // Writes mp/assets/<name>-ink.svg and <name>-paper.svg (MP <image> can't recolor via CSS).
 import fs from 'node:fs';
 
-const INK = '#2a2438', PAPER = '#fffaf0';
+const INK = '#171715', PAPER = '#fffdf7';
 const ART = {
   brush: `
 ..........##

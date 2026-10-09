@@ -45,12 +45,11 @@ const big = img(W * F, H * F, (x, y) => [128 + 100 * Math.sin(x / 40), 128 + 100
 const t = performance.now();
 const r = generate(big, W, H, { f: F, colors: 32 });
 console.log(`${W}x${H} cells, ${r.palette.length} colors, ${Math.round(performance.now() - t)}ms`);
-console.log('ok');
 
 // Mini program: shares gen.js (must stay an identical copy) and encodes thumbnails itself.
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { thumbnail } from './mp/utils/art.js';
+import { thumbnail, inkOf } from './mp/utils/art.js';
 assert.strictEqual(fs.readFileSync('mp/utils/gen.js', 'utf8'), fs.readFileSync('gen.js', 'utf8'), 'mp/utils/gen.js out of sync: cp gen.js mp/utils/');
 {
   const w = 7, h = 5, cells = new Uint8Array(w * h).map((_, i) => i % 2), filled = new Uint8Array(w * h).map((_, i) => i % 3 === 0);
@@ -60,3 +59,16 @@ assert.strictEqual(fs.readFileSync('mp/utils/gen.js', 'utf8'), fs.readFileSync('
   const info = execFileSync('sips', ['-g', 'pixelWidth', '-g', 'pixelHeight', tmp]).toString();
   assert.match(info, /pixelWidth: 238/); assert.match(info, /pixelHeight: 170/); // 7x5 upscaled x34, decodes fine
 }
+
+// Numbered swatches remain readable after arbitrary recoloring.
+const relativeLuminance = hex => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+  .map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)
+  .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+for (let r = 0; r <= 255; r += 17) for (let g = 0; g <= 255; g += 17) for (let b = 0; b <= 255; b += 17) {
+  const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+  assert.ok(['#000', '#fff'].includes(inkOf(hex)));
+  const bg = relativeLuminance(hex), fg = inkOf(hex) === '#fff' ? 1 : 0;
+  assert.ok((Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05) >= 4.5, `number contrast on ${hex}`);
+}
+
+console.log('ok (generation, mini-program parity, PNG, 4096 palette contrast samples)');
